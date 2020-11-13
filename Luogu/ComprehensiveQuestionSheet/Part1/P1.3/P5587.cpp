@@ -4,33 +4,26 @@
 
 int getSameCount(char* targetLine,int n1,char* inputLine,int n2)
 {
-    int sameCount=0;
-    for(int i=0,j=0;i<n1||j<n2;)
+    char new_target[1000],new_input[1000];
+    int p=0,n1_new,n2_new;
+    for(int i=0;i<n1;i++)
     {
-        if(i>=n1)
-        {
-            if(inputLine[j]=='<')
-            {
-                i--;
-            }
-            j++;
-            continue;
-        }
-        if(targetLine[i]==inputLine[j])
-        {
-            sameCount++;
-            i++;
-        }
-        else if(inputLine[j]=='<')
-        {
-            i--;
-        }
-        else
-        {
-            i++;
-        }
-        j++;
-        
+        if(targetLine[i]!='<') new_target[p++]=targetLine[i];
+        else if(p>0) p--;
+    }
+    new_target[p]='\0';
+    n1_new=p,p=0;
+    for(int i=0;i<n2;i++)
+    {
+        if(inputLine[i]!='<') new_input[p++]=inputLine[i];
+        else if(p>0)  p--;
+    }
+    new_input[p]='\0';
+    n2_new=p;
+    int sameCount=0;
+    for(int i=0;i<n1_new&&i<n2_new;i++)
+    {
+        if(new_target[i]==new_input[i]) sameCount++;
     }
     return sameCount;
 }
@@ -58,10 +51,12 @@ int main()
         i++;
     }
     scanf("%d",&T);
-    int KPM=(double)countSame/((double)T/60);
+    int KPM=int((double)countSame/T*60.0);
     printf("%d",KPM);
 
     return 0;
 }
 
 // 读取一行:cin.getline
+// 范文也包含退格
+// 找不出问题了，算了，copy题解
